@@ -1,8 +1,13 @@
-import express from "express";
-
+import SocketService from "./services/socket";
+import http from "http";
 async function init() {
-  const app = express();
-  app.listen(process.env?.PORT || 3002, () =>
+  const socketService = new SocketService();
+
+  const httpServer = http.createServer();
+
+  socketService.io.attach(httpServer);
+
+  httpServer.listen(process.env?.PORT || 8000, () =>
     console.log("Server is running on port 3000")
   );
 }
